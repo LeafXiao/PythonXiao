@@ -1,0 +1,67 @@
+metadata:
+  name: argo-trigger-scf-test-xiao
+  namespace: argo
+  uid: de0e0b36-2dab-4ca8-99f1-4145b4ba9758
+  resourceVersion: '34419053275'
+  generation: 4
+  creationTimestamp: '2023-07-12T09:18:30Z'
+  labels:
+    workflows.argoproj.io/creator: system-serviceaccount-argo-argo-server
+  managedFields:
+    - manager: argo
+      operation: Update
+      apiVersion: argoproj.io/v1alpha1
+      time: '2023-07-10T10:17:19Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:workflows.argoproj.io/creator: {}
+        f:spec: {}
+spec:
+  templates:
+    - name: entrance
+      inputs: {}
+      outputs: {}
+      metadata: {}
+      steps:
+        - - name: first-task
+            template: argosay
+            arguments: {}
+        - - name: second-task
+            template: call-scf-xiao
+            arguments: {}
+    - name: argosay
+      inputs:
+        parameters:
+          - name: message
+            value: '{{workflow.parameters.message}}'
+      outputs: {}
+      metadata: {}
+      container:
+        name: main
+        image: bmw-raas-poc.tencentcloudcr.com/reprocessing-workflow/helloargo:v1
+        command:
+          - /argosay
+        args:
+          - echo
+          - '{{inputs.parameters.message}}'
+        resources: {}
+    - name: call-scf-xiao
+      inputs: {}
+      outputs: {}
+      metadata: {}
+      container:
+        name: ''
+        image: bmw-raas-poc.tencentcloudcr.com/reprocessing-workflow/scf-argo-test:v2
+        resources: {}
+  entrypoint: entrance
+  arguments:
+    parameters:
+      - name: message
+        value: hello argo
+  ttlStrategy:
+    secondsAfterCompletion: 300
+  podGC:
+    strategy: OnPodCompletion
