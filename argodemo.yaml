@@ -1,10 +1,7 @@
 metadata:
   name: argo-trigger-scf-test-xiao
   namespace: argo
-  uid: de0e0b36-2dab-4ca8-99f1-4145b4ba9758
-  resourceVersion: '34419053275'
   generation: 4
-  creationTimestamp: '2023-07-12T09:18:30Z'
   labels:
     workflows.argoproj.io/creator: system-serviceaccount-argo-argo-server
   managedFields:
