@@ -1,5 +1,5 @@
 metadata:
-  name: argo-trigger-scf-test-xiao
+  name: pythn-sdk-trigger-argo-test-xiao
   namespace: argo
   generation: 4
   labels:
